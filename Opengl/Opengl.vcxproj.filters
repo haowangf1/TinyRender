@@ -19,6 +19,12 @@
     <Filter Include="渲染引擎\着色器源代码">
       <UniqueIdentifier>{7821bf74-94f7-4ddb-80df-84ec7f3695f4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="渲染引擎\缓冲区">
+      <UniqueIdentifier>{b91ca542-1d87-46a3-98d3-e50262b29ad2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="渲染引擎\错误处理">
+      <UniqueIdentifier>{e93e14ff-cdeb-4f64-972b-2893b10ac886}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -26,6 +32,15 @@
     </ClCompile>
     <ClCompile Include="stb_image.cpp">
       <Filter>渲染引擎\依赖库</Filter>
+    </ClCompile>
+    <ClCompile Include="VertexBuffer.cpp">
+      <Filter>渲染引擎\缓冲区</Filter>
+    </ClCompile>
+    <ClCompile Include="render.cpp">
+      <Filter>渲染引擎\错误处理</Filter>
+    </ClCompile>
+    <ClCompile Include="IndexBuffer.cpp">
+      <Filter>渲染引擎\缓冲区</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -40,6 +55,15 @@
     </ClInclude>
     <ClInclude Include="Depend\glm\type_ptr.hpp">
       <Filter>渲染引擎\依赖库</Filter>
+    </ClInclude>
+    <ClInclude Include="VertexBuffer.h">
+      <Filter>渲染引擎\缓冲区</Filter>
+    </ClInclude>
+    <ClInclude Include="render.h">
+      <Filter>渲染引擎\错误处理</Filter>
+    </ClInclude>
+    <ClInclude Include="IndexBuffer.h">
+      <Filter>渲染引擎\缓冲区</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

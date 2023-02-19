@@ -149,12 +149,18 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="stb_image.cpp" />
+    <ClCompile Include="render.cpp" />
+    <ClCompile Include="VertexBuffer.cpp" />
+    <ClCompile Include="IndexBuffer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Depend\glm\glm.hpp" />
     <ClInclude Include="Depend\glm\matrix_transform.hpp" />
     <ClInclude Include="Depend\glm\type_ptr.hpp" />
     <ClInclude Include="stb_image.h" />
+    <ClInclude Include="render.h" />
+    <ClInclude Include="VertexBuffer.h" />
+    <ClInclude Include="IndexBuffer.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Shader.shader" />

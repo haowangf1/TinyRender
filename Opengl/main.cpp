@@ -8,14 +8,18 @@
 #include<gtc/matrix_transform.hpp>
 #include<gtc/type_ptr.hpp>
 #include<sstream>
-
-#define GLEW_STATIC
+#include"render.h"
+#include"VertexBuffer.h"
+#include"indexBuffer.h"
 
 using namespace std;
 
-// settings
-const unsigned int SCR_WIDTH = 800;
-const unsigned int SCR_HEIGHT = 600;
+#define GLEW_STATIC
+
+// 窗口尺寸
+const unsigned int SCR_WIDTH = 2160;
+const unsigned int SCR_HEIGHT = 1440;
+
 
 //从源文件读取着色器
 void ReadShaderFromFile(const string& filePath,string &VertexShader,string& FragmentShader)
@@ -78,7 +82,6 @@ static unsigned int CompileShader(unsigned int type, const string& ShaderSrc)
     int result;
     glGetShaderiv(id, GL_COMPILE_STATUS, &result);
 
-
     //打印错误日志  程序是在显卡中编译的
     if (result == GL_FALSE)
     {
@@ -126,7 +129,7 @@ int main(void)
         return -1;
 
     /* Create a windowed mode window and its OpenGL context */
-    window = glfwCreateWindow(2160, 1440, "Hello World by wanghao", NULL, NULL);
+    window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "Hello World by wanghao", NULL, NULL);
     if (!window)
     {
         glfwTerminate();
@@ -211,7 +214,7 @@ int main(void)
     glBufferData(GL_ARRAY_BUFFER, 4 * 2 * sizeof(float), pos, GL_STATIC_DRAW);//将自定义数据复制到当前绑定缓冲区中   数据从cpu发送到GPU
 
     //生成索引缓冲区 //允许同时绑定多个类型不同的缓冲区
-    unsigned int ibo;//生成的缓冲区id  例子：渲染id为1的缓冲区
+    unsigned int ibo;//生成的缓冲区id  例子：生成一个渲染id缓冲区
     glGenBuffers(1, &ibo);//生成一个缓冲区返回id
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);//绑定这个缓冲区为当前缓冲区
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, 6 * sizeof(unsigned int), index, GL_STATIC_DRAW);//将自定义数据复制到当前绑定缓冲区中
@@ -226,22 +229,20 @@ int main(void)
 
 #endif
 
+    //创建顶点缓冲区并绑定
+    VertexBuffer VB(pos, sizeof(pos));
+    VB.Bind();
+
+    //创建索引缓冲区并绑定
+    IndexBuffer IB(indices,sizeof(indices));
+    IB.Bind();
 
     unsigned int VBO, VAO, EBO;
     glGenVertexArrays(1, &VAO);
-    glGenBuffers(1, &VBO);
-    glGenBuffers(1, &EBO);
-
     glBindVertexArray(VAO);
 
-    glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(pos), pos, GL_STATIC_DRAW);
-
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
-
     // position attribute
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);//末尾参数为第一个数据相对原点的便宜量 
     glEnableVertexAttribArray(0);
     // color attribute
     glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
@@ -265,7 +266,7 @@ int main(void)
     // load image, create texture and generate mipmaps
     int width, height, nrChannels;
     // The FileSystem::getPath(...) is part of the GitHub repository so we can find files on any IDE/platform; replace it with your own image path.
-    const char* path = "D:/OpenGl/wang.jpg";
+    const char* path = "D:/Opengl-git/wang.jpg";
     unsigned char* data = stbi_load(path, &width, &height, &nrChannels, 0);
     if (data)
     {
@@ -315,7 +316,7 @@ int main(void)
         glm::mat4 projection = glm::mat4(1.0f);
         model = glm::rotate(model, (float)glfwGetTime() * glm::radians(20.0f), glm::vec3(0.5f, 1.0f, 0.0f));
         view = glm::translate(view, glm::vec3(0.0f, 0.0f, -4.0f));
-        projection = glm::perspective(glm::radians(45.0f), (float)SCR_WIDTH / (float)SCR_HEIGHT, 1.0f, 100.0f);
+        projection = glm::perspective(glm::radians(45.0f), (float)SCR_WIDTH  / (float)SCR_HEIGHT, 1.0f, 100.0f);
         // retrieve the matrix uniform locations
         unsigned int modelLoc = glGetUniformLocation(shader, "model");
         unsigned int viewLoc = glGetUniformLocation(shader, "view");
@@ -324,7 +325,6 @@ int main(void)
         glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
         glUniformMatrix4fv(projectLoc, 1, GL_FALSE, glm::value_ptr(projection));
         glUniformMatrix4fv(viewLoc, 1, GL_FALSE, &view[0][0]);
- 
 
         glBindTexture(GL_TEXTURE_2D, texture);
         glBindVertexArray(VAO);
@@ -334,8 +334,7 @@ int main(void)
        // glUniform4f(location, 1,r, 0.4f, 1);//给uniform变量传数据
         //glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);//利用顶点  和索引缓冲区的数据进行绘制，状态机特性  将顶点和索引设置好后直接绘制，不用再给数据
 
-        
-
+   
         increment = -0.0025f;
         r += increment;
 
