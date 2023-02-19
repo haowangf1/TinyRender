@@ -1,0 +1,19 @@
+version 330 core
+ layout (location = 0) in vec3 aPoss;
+        "layout (location = 1) in vec3 aColor;\n"
+        "layout (location = 2) in vec2 aTexCoord;\n"
+        "out vec3 ourColors;\n"
+        "out vec2 TexCoord;\n"
+
+        "uniform mat4 transform;\n"
+
+        "uniform mat4 model;\n"
+        "uniform mat4 view;\n"
+        "uniform mat4 projection;\n"
+
+        "void main()\n"
+        "{\n"
+        "   gl_Position = projection * view * model*vec4(aPoss, 1.0);\n"
+        "   ourColors = aColor;\n"
+        "   TexCoord = vec2(aTexCoord.x, aTexCoord.y);\n"
+        "}\0";
