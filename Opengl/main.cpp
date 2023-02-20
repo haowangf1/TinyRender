@@ -241,7 +241,8 @@ int main(void)
     glGenVertexArrays(1, &VAO);
     glBindVertexArray(VAO);
 
-    // position attribute
+    // position attribute for VB
+    //着色器中顶点属性的位置为0，一个属性有9个float那么大，间距为5个float,第一个属性相对原点的偏移量为0
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);//末尾参数为第一个数据相对原点的便宜量 
     glEnableVertexAttribArray(0);
     // color attribute
@@ -250,6 +251,9 @@ int main(void)
     // texture coord attribute
     glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
     glEnableVertexAttribArray(2);
+
+    //layout (location = 1) in vec3 aColor;    location的值跟glVertexAttribPointer设置的定位属性位置的值是对应的
+    //layout(location = 2) in vec2 aTexCoord;
 
 
     // load and create a texture 

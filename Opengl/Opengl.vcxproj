@@ -152,6 +152,8 @@
     <ClCompile Include="render.cpp" />
     <ClCompile Include="VertexBuffer.cpp" />
     <ClCompile Include="IndexBuffer.cpp" />
+    <ClCompile Include="VertexArray.cpp" />
+    <ClCompile Include="VertexBufferLayout.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Depend\glm\glm.hpp" />
@@ -161,6 +163,8 @@
     <ClInclude Include="render.h" />
     <ClInclude Include="VertexBuffer.h" />
     <ClInclude Include="IndexBuffer.h" />
+    <ClInclude Include="VertexArray.h" />
+    <ClInclude Include="VertexBufferLayout.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Shader.shader" />
