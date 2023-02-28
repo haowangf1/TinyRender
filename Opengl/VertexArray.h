@@ -1,6 +1,7 @@
 #pragma once
 #include"VertexBuffer.h"
 #include"VertexBufferLayout.h"
+#include<glew.h>
 
 
 //类的意义
@@ -17,4 +18,5 @@ public:
 	void BindBuffer(VertexBuffer &vb,VertexBufferLayout &layout);
 	//创建顶点数组对象并绑定
 	void Bind();
+	void UnBind();
 };

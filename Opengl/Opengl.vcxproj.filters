@@ -25,6 +25,15 @@
     <Filter Include="渲染引擎\错误处理">
       <UniqueIdentifier>{e93e14ff-cdeb-4f64-972b-2893b10ac886}</UniqueIdentifier>
     </Filter>
+    <Filter Include="渲染引擎\缓冲区\纹理缓冲">
+      <UniqueIdentifier>{60e809cf-7f3c-4074-9f03-4bd8d0fe6d90}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="渲染引擎\缓冲区\顶点索引缓冲">
+      <UniqueIdentifier>{a9c48107-a712-49aa-835a-006d2180b59b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="渲染引擎\UI">
+      <UniqueIdentifier>{8247b4ef-eac5-41ed-adfe-63a3cbe36d83}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -33,20 +42,44 @@
     <ClCompile Include="stb_image.cpp">
       <Filter>渲染引擎\依赖库</Filter>
     </ClCompile>
-    <ClCompile Include="VertexBuffer.cpp">
-      <Filter>渲染引擎\缓冲区</Filter>
-    </ClCompile>
-    <ClCompile Include="render.cpp">
+    <ClCompile Include="ErrLog.cpp">
       <Filter>渲染引擎\错误处理</Filter>
     </ClCompile>
     <ClCompile Include="IndexBuffer.cpp">
-      <Filter>渲染引擎\缓冲区</Filter>
+      <Filter>渲染引擎\缓冲区\顶点索引缓冲</Filter>
     </ClCompile>
     <ClCompile Include="VertexArray.cpp">
-      <Filter>渲染引擎\缓冲区</Filter>
+      <Filter>渲染引擎\缓冲区\顶点索引缓冲</Filter>
+    </ClCompile>
+    <ClCompile Include="VertexBuffer.cpp">
+      <Filter>渲染引擎\缓冲区\顶点索引缓冲</Filter>
     </ClCompile>
     <ClCompile Include="VertexBufferLayout.cpp">
-      <Filter>渲染引擎\缓冲区</Filter>
+      <Filter>渲染引擎\缓冲区\顶点索引缓冲</Filter>
+    </ClCompile>
+    <ClCompile Include="TextureBuffer.cpp">
+      <Filter>渲染引擎\缓冲区\纹理缓冲</Filter>
+    </ClCompile>
+    <ClCompile Include="Depend\Imgui\imgui.cpp">
+      <Filter>渲染引擎\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Depend\Imgui\imgui_demo.cpp">
+      <Filter>渲染引擎\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Depend\Imgui\imgui_draw.cpp">
+      <Filter>渲染引擎\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Depend\Imgui\imgui_tables.cpp">
+      <Filter>渲染引擎\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Depend\Imgui\imgui_widgets.cpp">
+      <Filter>渲染引擎\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Depend\Imgui\imgui_impl_opengl3.cpp">
+      <Filter>渲染引擎\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Depend\Imgui\imgui_impl_glfw.cpp">
+      <Filter>渲染引擎\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -62,20 +95,53 @@
     <ClInclude Include="Depend\glm\type_ptr.hpp">
       <Filter>渲染引擎\依赖库</Filter>
     </ClInclude>
-    <ClInclude Include="VertexBuffer.h">
-      <Filter>渲染引擎\缓冲区</Filter>
-    </ClInclude>
-    <ClInclude Include="render.h">
+    <ClInclude Include="ErrLog.h">
       <Filter>渲染引擎\错误处理</Filter>
     </ClInclude>
+    <ClInclude Include="ShaderUtil.h">
+      <Filter>渲染引擎\着色器源代码</Filter>
+    </ClInclude>
     <ClInclude Include="IndexBuffer.h">
-      <Filter>渲染引擎\缓冲区</Filter>
+      <Filter>渲染引擎\缓冲区\顶点索引缓冲</Filter>
     </ClInclude>
     <ClInclude Include="VertexArray.h">
-      <Filter>渲染引擎\缓冲区</Filter>
+      <Filter>渲染引擎\缓冲区\顶点索引缓冲</Filter>
+    </ClInclude>
+    <ClInclude Include="VertexBuffer.h">
+      <Filter>渲染引擎\缓冲区\顶点索引缓冲</Filter>
     </ClInclude>
     <ClInclude Include="VertexBufferLayout.h">
-      <Filter>渲染引擎\缓冲区</Filter>
+      <Filter>渲染引擎\缓冲区\顶点索引缓冲</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureBuffer.h">
+      <Filter>渲染引擎\缓冲区\纹理缓冲</Filter>
+    </ClInclude>
+    <ClInclude Include="Depend\Imgui\imconfig.h">
+      <Filter>渲染引擎\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Depend\Imgui\imgui.h">
+      <Filter>渲染引擎\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Depend\Imgui\imgui_internal.h">
+      <Filter>渲染引擎\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Depend\Imgui\imstb_rectpack.h">
+      <Filter>渲染引擎\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Depend\Imgui\imstb_textedit.h">
+      <Filter>渲染引擎\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Depend\Imgui\imstb_truetype.h">
+      <Filter>渲染引擎\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Depend\Imgui\imgui_impl_glfw.h">
+      <Filter>渲染引擎\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Depend\Imgui\imgui_impl_opengl3.h">
+      <Filter>渲染引擎\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Depend\Imgui\imgui_impl_opengl3_loader.h">
+      <Filter>渲染引擎\UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

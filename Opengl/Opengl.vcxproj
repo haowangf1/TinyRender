@@ -88,7 +88,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions);GLEW_STATIC</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Depend\GLEW\glew\glew-2.1.0\include\GL;$(SolutionDir)Depend\glm;$(SolutionDir)Depend\GLFW\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Depend\Imgui;$(SolutionDir)Depend\GLEW\glew\glew-2.1.0\include\GL;$(SolutionDir)Depend\glm;$(SolutionDir)Depend\GLFW\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -105,7 +105,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions);GLEW_STATIC</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Depend\GLEW\glew\glew-2.1.0\include\GL;$(SolutionDir)Depend\glm;$(SolutionDir)Depend\GLFW\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Depend\Imgui;$(SolutionDir)Depend\GLEW\glew\glew-2.1.0\include\GL;$(SolutionDir)Depend\glm;$(SolutionDir)Depend\GLFW\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Disabled</Optimization>
       <WholeProgramOptimization>false</WholeProgramOptimization>
     </ClCompile>
@@ -147,24 +147,43 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Depend\Imgui\imgui.cpp" />
+    <ClCompile Include="Depend\Imgui\imgui_demo.cpp" />
+    <ClCompile Include="Depend\Imgui\imgui_draw.cpp" />
+    <ClCompile Include="Depend\Imgui\imgui_impl_glfw.cpp" />
+    <ClCompile Include="Depend\Imgui\imgui_impl_opengl3.cpp" />
+    <ClCompile Include="Depend\Imgui\imgui_tables.cpp" />
+    <ClCompile Include="Depend\Imgui\imgui_widgets.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="stb_image.cpp" />
-    <ClCompile Include="render.cpp" />
+    <ClCompile Include="ErrLog.cpp" />
     <ClCompile Include="VertexBuffer.cpp" />
     <ClCompile Include="IndexBuffer.cpp" />
     <ClCompile Include="VertexArray.cpp" />
     <ClCompile Include="VertexBufferLayout.cpp" />
+    <ClCompile Include="TextureBuffer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Depend\glm\glm.hpp" />
     <ClInclude Include="Depend\glm\matrix_transform.hpp" />
     <ClInclude Include="Depend\glm\type_ptr.hpp" />
+    <ClInclude Include="Depend\Imgui\imconfig.h" />
+    <ClInclude Include="Depend\Imgui\imgui.h" />
+    <ClInclude Include="Depend\Imgui\imgui_impl_glfw.h" />
+    <ClInclude Include="Depend\Imgui\imgui_impl_opengl3.h" />
+    <ClInclude Include="Depend\Imgui\imgui_impl_opengl3_loader.h" />
+    <ClInclude Include="Depend\Imgui\imgui_internal.h" />
+    <ClInclude Include="Depend\Imgui\imstb_rectpack.h" />
+    <ClInclude Include="Depend\Imgui\imstb_textedit.h" />
+    <ClInclude Include="Depend\Imgui\imstb_truetype.h" />
     <ClInclude Include="stb_image.h" />
-    <ClInclude Include="render.h" />
+    <ClInclude Include="ErrLog.h" />
     <ClInclude Include="VertexBuffer.h" />
     <ClInclude Include="IndexBuffer.h" />
     <ClInclude Include="VertexArray.h" />
     <ClInclude Include="VertexBufferLayout.h" />
+    <ClInclude Include="ShaderUtil.h" />
+    <ClInclude Include="TextureBuffer.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Shader.shader" />

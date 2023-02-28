@@ -1,6 +1,6 @@
 #pragma once
-#include"render.h"
-
+#include"ErrLog.h"
+#include<glew.h>
 class VertexBuffer
 {
 private:
