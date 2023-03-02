@@ -162,6 +162,7 @@
     <ClCompile Include="VertexArray.cpp" />
     <ClCompile Include="VertexBufferLayout.cpp" />
     <ClCompile Include="TextureBuffer.cpp" />
+    <ClCompile Include="Shader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Depend\glm\glm.hpp" />
@@ -184,8 +185,10 @@
     <ClInclude Include="VertexBufferLayout.h" />
     <ClInclude Include="ShaderUtil.h" />
     <ClInclude Include="TextureBuffer.h" />
+    <ClInclude Include="Shader.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="light.shader" />
     <None Include="Shader.shader" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

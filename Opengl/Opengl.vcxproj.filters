@@ -16,9 +16,6 @@
     <Filter Include="渲染引擎\依赖库">
       <UniqueIdentifier>{1b496092-2ee4-46e3-ab06-ffc5d45f8755}</UniqueIdentifier>
     </Filter>
-    <Filter Include="渲染引擎\着色器源代码">
-      <UniqueIdentifier>{7821bf74-94f7-4ddb-80df-84ec7f3695f4}</UniqueIdentifier>
-    </Filter>
     <Filter Include="渲染引擎\缓冲区">
       <UniqueIdentifier>{b91ca542-1d87-46a3-98d3-e50262b29ad2}</UniqueIdentifier>
     </Filter>
@@ -33,6 +30,9 @@
     </Filter>
     <Filter Include="渲染引擎\UI">
       <UniqueIdentifier>{8247b4ef-eac5-41ed-adfe-63a3cbe36d83}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="渲染引擎\着色器源">
+      <UniqueIdentifier>{7821bf74-94f7-4ddb-80df-84ec7f3695f4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -81,6 +81,9 @@
     <ClCompile Include="Depend\Imgui\imgui_impl_glfw.cpp">
       <Filter>渲染引擎\UI</Filter>
     </ClCompile>
+    <ClCompile Include="Shader.cpp">
+      <Filter>渲染引擎\着色器源</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Depend\glm\glm.hpp">
@@ -99,7 +102,7 @@
       <Filter>渲染引擎\错误处理</Filter>
     </ClInclude>
     <ClInclude Include="ShaderUtil.h">
-      <Filter>渲染引擎\着色器源代码</Filter>
+      <Filter>渲染引擎\着色器源</Filter>
     </ClInclude>
     <ClInclude Include="IndexBuffer.h">
       <Filter>渲染引擎\缓冲区\顶点索引缓冲</Filter>
@@ -143,10 +146,16 @@
     <ClInclude Include="Depend\Imgui\imgui_impl_opengl3_loader.h">
       <Filter>渲染引擎\UI</Filter>
     </ClInclude>
+    <ClInclude Include="Shader.h">
+      <Filter>渲染引擎\着色器源</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Shader.shader">
-      <Filter>渲染引擎\着色器源代码</Filter>
+      <Filter>渲染引擎\着色器源</Filter>
+    </None>
+    <None Include="light.shader">
+      <Filter>渲染引擎\着色器源</Filter>
     </None>
   </ItemGroup>
 </Project>

@@ -17,6 +17,7 @@
 #include"TextureBuffer.h"
 #include<imgui_impl_glfw.h>
 #include<imgui_impl_opengl3.h>
+#include"Shader.h"
 
 using namespace std;
 
@@ -35,6 +36,10 @@ int main(void)
     if (!glfwInit())
         return -1;
 
+   // glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+    //glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+    //glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+
     /* Create a windowed mode window and its OpenGL context */
     window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "Hello World by wanghao", NULL, NULL);
     if (!window)
@@ -44,9 +49,10 @@ int main(void)
     }
     /* Make the window's context current */
     glfwMakeContextCurrent(window);
+
+
+
     glewInit();//初始化glew
-
-
 
     // Setup Dear ImGui context
     // GL 3.0 + GLSL 130
@@ -120,39 +126,44 @@ int main(void)
          1, 2, 3  // second triangle
     };
 
+
+    VertexArray VA;
+    VA.Bind();//状态机的特性是必须先绑定这个VAO,后续VBO的数据才会被这个VAO所记录
     //创建顶点缓冲区并绑定
     VertexBuffer VB(pos, sizeof(pos));
-
     //设置顶点属性数据
     VertexBufferLayout layout;
     layout.push<float>(3);
     layout.push<float>(3);
     layout.push<float>(2);
-   
     //创建顶点数组缓冲区,绑定顶点缓冲，并设置顶点属性布局
-    VertexArray VA;
     VA.BindBuffer(VB, layout);
-  
+
+
+    VertexArray VA_Light;
+    VA_Light.Bind();//状态机的特性是必须先绑定这个VAO,后续VBO的数据才会被这个VAO所记录
+    VA_Light.BindBuffer(VB, layout);
+   
+    
     //创建索引缓冲区并绑定
     IndexBuffer IB(indices,sizeof(indices));
     IB.Bind();
-
     //创建纹理缓冲并绑定
     TextureBuffer Texture(1);
     Texture.Bind();
     Texture.LoadImage("../wang.jpg");  
    
-    //从源文件读取着色器源码，并绑定
-    string vex;
-    string fra;
-    ReadShaderFromFile("Shader.shader", vex, fra);
-    unsigned int shader = CreateShader(vex, fra);
-    glUseProgram(shader);//状态机的体现  设置状态后 所有的draw指令都会使用当前状态绘制
 
+    //从源文件读取着色器源码，并绑定
+    Shader Cubeshader("Shader.shader");
+    
+
+    //从源文件读取着色器源码，并绑定
+    Shader Lightshader("light.shader");
+  
    // int location = glGetUniformLocation(shader, "u_Color");//找到GPU中定义的uniform变量的内存位置
    // _ASSERT(location!=-1);//确保找到变量位置
    // glUniform4f(location,0.8f,0.5f,0.4f,1);//给uniform变量传数据
-
 
      // Our state
     bool show_demo_window = true;
@@ -211,34 +222,39 @@ int main(void)
 
 
 
-        //定义变换矩阵并传递给着色器
-        glm::mat4 trans = glm::mat4(1.0f);//初始化
-        trans = glm::rotate(trans, (float)(glfwGetTime()), glm::vec3(0.0, 0.0, 1.0));
-        trans = glm::scale(trans, glm::vec3(1.5, 1.5, 1.5));
-        unsigned int transformLoc = glGetUniformLocation(shader, "transform");
-        glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(trans));
 
         // create transformations
         glm::mat4 model = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
         glm::mat4 view = glm::mat4(1.0f);
         glm::mat4 projection = glm::mat4(1.0f);
         model = glm::rotate(model, (float)glfwGetTime() * glm::radians(20.0f), glm::vec3(0.5f, 1.0f, 0.0f));
-        view = glm::translate(view, glm::vec3(0.0f, 0.0f, -4.0f));
+        view = glm::translate(view, glm::vec3(1.0f, 0.0f, -5.0f));
         projection = glm::perspective(glm::radians(45.0f), (float)SCR_WIDTH  / (float)SCR_HEIGHT, 1.0f, 100.0f);
 
-        // retrieve the matrix uniform locations
-        unsigned int modelLoc = glGetUniformLocation(shader, "model");
-        unsigned int viewLoc = glGetUniformLocation(shader, "view");
-        unsigned int projectLoc = glGetUniformLocation(shader, "projection");
 
-        // pass them to the shaders (3 different ways)
-        glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-        glUniformMatrix4fv(projectLoc, 1, GL_FALSE, glm::value_ptr(projection));
-        glUniformMatrix4fv(viewLoc, 1, GL_FALSE, &view[0][0]);
-
+        //绘制立方体
+        Cubeshader.SetUniformMatrix4fv("model", model);
+        Cubeshader.SetUniformMatrix4fv("view", view);
+        Cubeshader.SetUniformMatrix4fv("projection", projection);
+        VA.Bind();//绑定要绘制的数据
+        Cubeshader.Bind();//绑定要使用的顶点着色器(状态机特性)
         glDrawArrays(GL_TRIANGLES, 0, 36);//绘制缓冲区中的数据  无索引缓冲
-       // glUniform4f(location, 1,r, 0.4f, 1);//给uniform变量传数据
-        //glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);//利用顶点  和索引缓冲区的数据进行绘制，状态机特性  将顶点和索引设置好后直接绘制，不用再给数据
+       
+
+        //绘制光源
+        glm::mat4 modellight = glm::mat4(1.0f);
+        modellight = glm::rotate(modellight, (float)glfwGetTime() * glm::radians(20.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+        glm::mat4 viewlight = glm::mat4(1.0f);
+        viewlight = glm::translate(viewlight, glm::vec3(-1.0f, 0.0f, -5.0f));
+        Lightshader.SetUniformMatrix4fv("model", modellight);
+        Lightshader.SetUniformMatrix4fv("view", viewlight);
+        Lightshader.SetUniformMatrix4fv("projection", projection);
+        VA_Light .Bind();//重新绑定要绘制的数据
+        Lightshader.Bind();//重新绑定要使用的顶点着色器(状态机特性)
+        glDrawArrays(GL_TRIANGLES, 0, 36);//绘制缓冲区中的数据，无索引缓冲
+
+
+ 
 
 
          // Rendering
@@ -252,7 +268,6 @@ int main(void)
         glfwPollEvents();
     }
 
-    glDeleteProgram(shader);
 
     // Cleanup
     ImGui_ImplOpenGL3_Shutdown();
