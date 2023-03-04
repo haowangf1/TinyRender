@@ -18,13 +18,8 @@
 
 class Shader
 {
-
-	
-
-
-public:
-
 	unsigned int m_ShaderId = 0;
+public:
 
 	Shader(const std::string& filePath);
 	~Shader();
@@ -33,5 +28,6 @@ public:
 	void UnBind();
 
 	void SetUniformMatrix4fv(const string& VarName,glm::mat4 mat);
-
+	void SetUniformVec4(const string& VarName, float v1, float v2, float v3, float v4);
+	void SetUniformVec3(const string& VarName, float v1, float v2, float v3);
 };

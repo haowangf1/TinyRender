@@ -5,13 +5,13 @@
 VertexArray::VertexArray():m_VertexArrayId(0)
 {
 	//创建顶点数组对象
-	glGenVertexArrays(1, &m_VertexArrayId);
+	GLCALL(glGenVertexArrays(1, &m_VertexArrayId))
 	
 }
 
 VertexArray::~VertexArray()
 {
-	glDeleteBuffers(1, &m_VertexArrayId);
+	GLCALL(glDeleteBuffers(1, &m_VertexArrayId))
 }
 
 	
@@ -28,8 +28,8 @@ void VertexArray::BindBuffer(VertexBuffer& vb, VertexBufferLayout& layout)
 	{
 		const auto& lay = layout.m_ElementLayouts[i];
 		
-		glVertexAttribPointer(i, lay.m_iCountsData, lay.m_iTypeData, lay.m_iIfNormalized, layout.m_iStride, (const void*)offset);//第一个属性无偏移量
-		glEnableVertexAttribArray(i);
+		GLCALL(glVertexAttribPointer(i, lay.m_iCountsData, lay.m_iTypeData, lay.m_iIfNormalized, layout.m_iStride, (const void*)offset))//第一个属性无偏移量
+		GLCALL(glEnableVertexAttribArray(i))
 
 		offset += lay.getCurAttributeSize();
 	}
@@ -38,12 +38,12 @@ void VertexArray::BindBuffer(VertexBuffer& vb, VertexBufferLayout& layout)
 	
 void VertexArray::Bind()
 {
-	glBindVertexArray(m_VertexArrayId);
+	GLCALL(glBindVertexArray(m_VertexArrayId))
 
 }
 
 void VertexArray::UnBind()
 {
-	glBindVertexArray(0);
+	GLCALL(glBindVertexArray(0))
 
 }

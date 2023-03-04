@@ -18,6 +18,7 @@
 #include<imgui_impl_glfw.h>
 #include<imgui_impl_opengl3.h>
 #include"Shader.h"
+#include"ErrLog.h"
 
 using namespace std;
 
@@ -78,33 +79,33 @@ int main(void)
     glEnable(GL_DEPTH_TEST);
 
     float pos[] = {
-    -0.5f, -0.5f, -0.5f, 1.0f,0.0f,0.0f,     0.0f, 0.0f,
-     0.5f, -0.5f, -0.5f, 1.0f,0.0f,0.0f,     1.0f, 0.0f,
-     0.5f,  0.5f, -0.5f, 1.0f,0.0f,0.0f,     1.0f, 1.0f,
-     0.5f,  0.5f, -0.5f, 1.0f,0.0f,0.0f,     1.0f, 1.0f,
-    -0.5f,  0.5f, -0.5f, 1.0f,0.0f,0.0f,     0.0f, 1.0f,
-    -0.5f, -0.5f, -0.5f, 1.0f,0.0f,0.0f,     0.0f, 0.0f,
+    -0.5f, -0.5f, -0.5f, 1.0f,0.5f,0.31f,     0.0f, 0.0f,
+     0.5f, -0.5f, -0.5f, 1.0f,0.5f,0.31f,     1.0f, 0.0f,
+     0.5f,  0.5f, -0.5f, 1.0f,0.5f,0.31f,     1.0f, 1.0f,
+     0.5f,  0.5f, -0.5f, 1.0f,0.5f,0.31f,     1.0f, 1.0f,
+    -0.5f,  0.5f, -0.5f, 1.0f,0.5f,0.31f,     0.0f, 1.0f,
+    -0.5f, -0.5f, -0.5f, 1.0f,0.5f,0.31f,     0.0f, 0.0f,
 
-    -0.5f, -0.5f,  0.5f, 1.0f,0.0f,0.0f,   0.0f, 0.0f,
-     0.5f, -0.5f,  0.5f, 1.0f,0.0f,0.0f,   1.0f, 0.0f,
-     0.5f,  0.5f,  0.5f, 1.0f,0.0f,0.0f,   1.0f, 1.0f,
-     0.5f,  0.5f,  0.5f, 1.0f,0.0f,0.0f,   1.0f, 1.0f,
-    -0.5f,  0.5f,  0.5f, 1.0f,0.0f,0.0f,   0.0f, 1.0f,
-    -0.5f, -0.5f,  0.5f, 1.0f,0.0f,0.0f,   0.0f, 0.0f,
+    -0.5f, -0.5f,  0.5f, 1.0f,0.5f,0.31f,   0.0f, 0.0f,
+     0.5f, -0.5f,  0.5f, 1.0f,0.5f,0.31f,   1.0f, 0.0f,
+     0.5f,  0.5f,  0.5f, 1.0f,0.5f,0.31f,   1.0f, 1.0f,
+     0.5f,  0.5f,  0.5f, 1.0f,0.5f,0.31f,   1.0f, 1.0f,
+    -0.5f,  0.5f,  0.5f, 1.0f,0.5f,0.31f,   0.0f, 1.0f,
+    -0.5f, -0.5f,  0.5f, 1.0f,0.5f,0.31f,   0.0f, 0.0f,
 
-    -0.5f,  0.5f,  0.5f, 1.0f,0.0f,0.0f,    0.0f, 0.0f,
-    -0.5f,  0.5f, -0.5f, 1.0f,0.0f,0.0f,    1.0f, 0.0f,
-    -0.5f, -0.5f, -0.5f, 1.0f,0.0f,0.0f,    1.0f, 1.0f,
-    -0.5f, -0.5f, -0.5f, 1.0f,0.0f,0.0f,   1.0f, 1.0f,
-    -0.5f, -0.5f,  0.5f, 1.0f,0.0f,0.0f,   0.0f, 1.0f,
-    -0.5f,  0.5f,  0.5f, 1.0f,0.0f,0.0f,   0.0f, 0.0f,
+    -0.5f,  0.5f,  0.5f, 1.0f,0.5f,0.31f,    0.0f, 0.0f,
+    -0.5f,  0.5f, -0.5f, 1.0f,0.5f,0.31f,    1.0f, 0.0f,
+    -0.5f, -0.5f, -0.5f, 1.0f,0.5f,0.31f,    1.0f, 1.0f,
+    -0.5f, -0.5f, -0.5f, 1.0f,0.5f,0.31f,   1.0f, 1.0f,
+    -0.5f, -0.5f,  0.5f, 1.0f,0.5f,0.31f,   0.0f, 1.0f,
+    -0.5f,  0.5f,  0.5f, 1.0f,0.5f,0.31f,   0.0f, 0.0f,
 
-     0.5f,  0.5f,  0.5f, 1.0f,0.0f,0.0f,   1.0f, 0.0f,
-     0.5f,  0.5f, -0.5f, 1.0f,0.0f,0.0f,   1.0f, 1.0f,
-     0.5f, -0.5f, -0.5f, 1.0f,0.0f,0.0f,   0.0f, 1.0f,
-     0.5f, -0.5f, -0.5f, 1.0f,0.0f,0.0f,   0.0f, 1.0f,
-     0.5f, -0.5f,  0.5f, 1.0f,0.0f,0.0f,   0.0f, 0.0f,
-     0.5f,  0.5f,  0.5f, 1.0f,0.0f,0.0f,   1.0f, 0.0f,
+     0.5f,  0.5f,  0.5f, 1.0f,0.5f,0.31f,   1.0f, 0.0f,
+     0.5f,  0.5f, -0.5f, 1.0f,0.5f,0.31f,   1.0f, 1.0f,
+     0.5f, -0.5f, -0.5f, 1.0f,0.5f,0.31f,   0.0f, 1.0f,
+     0.5f, -0.5f, -0.5f, 1.0f,0.5f,0.31f,   0.0f, 1.0f,
+     0.5f, -0.5f,  0.5f, 1.0f,0.5f,0.31f,   0.0f, 0.0f,
+     0.5f,  0.5f,  0.5f, 1.0f,0.5f,0.31f,   1.0f, 0.0f,
 
     -0.5f, -0.5f, -0.5f, 1.0f,0.0f,0.0f,   0.0f, 1.0f,
      0.5f, -0.5f, -0.5f, 1.0f,0.0f,0.0f,   1.0f, 1.0f,
@@ -113,12 +114,101 @@ int main(void)
     -0.5f, -0.5f,  0.5f, 1.0f,0.0f,0.0f,   0.0f, 0.0f,
     -0.5f, -0.5f, -0.5f, 1.0f,0.0f,0.0f,   0.0f, 1.0f,
 
-    -0.5f,  0.5f, -0.5f, 1.0f,0.0f,0.0f,   0.0f, 1.0f,
-     0.5f,  0.5f, -0.5f, 1.0f,0.0f,0.0f,   1.0f, 1.0f,
-     0.5f,  0.5f,  0.5f, 1.0f,0.0f,0.0f,   1.0f, 0.0f,
-     0.5f,  0.5f,  0.5f, 1.0f,0.0f,0.0f,   1.0f, 0.0f,
-    -0.5f,  0.5f,  0.5f, 1.0f,0.0f,0.0f,   0.0f, 0.0f,
-    -0.5f,  0.5f, -0.5f, 1.0f,0.0f,0.0f,   0.0f, 1.0f
+    -0.5f,  0.5f, -0.5f, 1.0f,0.5f,0.31f,   0.0f, 1.0f,
+     0.5f,  0.5f, -0.5f, 1.0f,0.5f,0.31f,   1.0f, 1.0f,
+     0.5f,  0.5f,  0.5f, 1.0f,0.5f,0.31f,   1.0f, 0.0f,
+     0.5f,  0.5f,  0.5f, 1.0f,0.5f,0.31f,   1.0f, 0.0f,
+    -0.5f,  0.5f,  0.5f, 1.0f,0.5f,0.31f,   0.0f, 0.0f,
+    -0.5f,  0.5f, -0.5f, 1.0f,0.5f,0.31f,   0.0f, 1.0f
+    };
+
+
+    float poslight[] = {
+    -0.5f, -0.5f, -0.5f, 1.0f,1.0f,1.0f,     0.0f, 0.0f,
+     0.5f, -0.5f, -0.5f, 1.0f,1.0f,1.0f,     1.0f, 0.0f,
+     0.5f,  0.5f, -0.5f, 1.0f,1.0f,1.0f,     1.0f, 1.0f,
+     0.5f,  0.5f, -0.5f, 1.0f,1.0f,1.0f,     1.0f, 1.0f,
+    -0.5f,  0.5f, -0.5f, 1.0f,1.0f,1.0f,     0.0f, 1.0f,
+    -0.5f, -0.5f, -0.5f, 1.0f,1.0f,1.0f,     0.0f, 0.0f,
+
+    -0.5f, -0.5f,  0.5f, 1.0f,1.0f,1.0f,   0.0f, 0.0f,
+     0.5f, -0.5f,  0.5f, 1.0f,1.0f,1.0f,   1.0f, 0.0f,
+     0.5f,  0.5f,  0.5f, 1.0f,1.0f,1.0f,   1.0f, 1.0f,
+     0.5f,  0.5f,  0.5f, 1.0f,1.0f,1.0f,   1.0f, 1.0f,
+    -0.5f,  0.5f,  0.5f, 1.0f,1.0f,1.0f,   0.0f, 1.0f,
+    -0.5f, -0.5f,  0.5f, 1.0f,1.0f,1.0f,   0.0f, 0.0f,
+
+    -0.5f,  0.5f,  0.5f, 1.0f,1.0f,1.0f,    0.0f, 0.0f,
+    -0.5f,  0.5f, -0.5f, 1.0f,1.0f,1.0f,    1.0f, 0.0f,
+    -0.5f, -0.5f, -0.5f, 1.0f,1.0f,1.0f,    1.0f, 1.0f,
+    -0.5f, -0.5f, -0.5f, 1.0f,1.0f,1.0f,   1.0f, 1.0f,
+    -0.5f, -0.5f,  0.5f, 1.0f,1.0f,1.0f,   0.0f, 1.0f,
+    -0.5f,  0.5f,  0.5f, 1.0f,1.0f,1.0f,   0.0f, 0.0f,
+
+     0.5f,  0.5f,  0.5f, 1.0f,1.0f,1.0f,   1.0f, 0.0f,
+     0.5f,  0.5f, -0.5f, 1.0f,1.0f,1.0f,   1.0f, 1.0f,
+     0.5f, -0.5f, -0.5f, 1.0f,1.0f,1.0f,   0.0f, 1.0f,
+     0.5f, -0.5f, -0.5f, 1.0f,1.0f,1.0f,   0.0f, 1.0f,
+     0.5f, -0.5f,  0.5f, 1.0f,1.0f,1.0f,   0.0f, 0.0f,
+     0.5f,  0.5f,  0.5f, 1.0f,1.0f,1.0f,   1.0f, 0.0f,
+
+    -0.5f, -0.5f, -0.5f, 1.0f,1.0f,1.0f,   0.0f, 1.0f,
+     0.5f, -0.5f, -0.5f, 1.0f,1.0f,1.0f,   1.0f, 1.0f,
+     0.5f, -0.5f,  0.5f, 1.0f,1.0f,1.0f,   1.0f, 0.0f,
+     0.5f, -0.5f,  0.5f, 1.0f,1.0f,1.0f,   1.0f, 0.0f,
+    -0.5f, -0.5f,  0.5f, 1.0f,1.0f,1.0f,   0.0f, 0.0f,
+    -0.5f, -0.5f, -0.5f, 1.0f,1.0f,1.0f,   0.0f, 1.0f,
+
+    -0.5f,  0.5f, -0.5f, 1.0f,1.0f,1.0f,   0.0f, 1.0f,
+     0.5f,  0.5f, -0.5f, 1.0f,1.0f,1.0f,   1.0f, 1.0f,
+     0.5f,  0.5f,  0.5f, 1.0f,1.0f,1.0f,   1.0f, 0.0f,
+     0.5f,  0.5f,  0.5f, 1.0f,1.0f,1.0f,   1.0f, 0.0f,
+    -0.5f,  0.5f,  0.5f, 1.0f,1.0f,1.0f,   0.0f, 0.0f,
+    -0.5f,  0.5f, -0.5f, 1.0f,1.0f,1.0f,   0.0f, 1.0f
+    };
+
+    float vertices_withNormal[] = {
+    -0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+     0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+     0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+     0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+    -0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+    -0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+
+    -0.5f, -0.5f,  0.5f,  0.0f,  0.0f, 1.0f,
+     0.5f, -0.5f,  0.5f,  0.0f,  0.0f, 1.0f,
+     0.5f,  0.5f,  0.5f,  0.0f,  0.0f, 1.0f,
+     0.5f,  0.5f,  0.5f,  0.0f,  0.0f, 1.0f,
+    -0.5f,  0.5f,  0.5f,  0.0f,  0.0f, 1.0f,
+    -0.5f, -0.5f,  0.5f,  0.0f,  0.0f, 1.0f,
+
+    -0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f,
+    -0.5f,  0.5f, -0.5f, -1.0f,  0.0f,  0.0f,
+    -0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f,
+    -0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f,
+    -0.5f, -0.5f,  0.5f, -1.0f,  0.0f,  0.0f,
+    -0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f,
+
+     0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,
+     0.5f,  0.5f, -0.5f,  1.0f,  0.0f,  0.0f,
+     0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,
+     0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,
+     0.5f, -0.5f,  0.5f,  1.0f,  0.0f,  0.0f,
+     0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,
+
+    -0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,
+     0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,
+     0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,
+     0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,
+    -0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,
+    -0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,
+
+    -0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,
+     0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,
+     0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
+     0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
+    -0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
+    -0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f
     };
 
     unsigned int indices[] = {
@@ -130,19 +220,23 @@ int main(void)
     VertexArray VA;
     VA.Bind();//状态机的特性是必须先绑定这个VAO,后续VBO的数据才会被这个VAO所记录
     //创建顶点缓冲区并绑定
-    VertexBuffer VB(pos, sizeof(pos));
+    VertexBuffer VB(vertices_withNormal, sizeof(vertices_withNormal));
     //设置顶点属性数据
-    VertexBufferLayout layout;
-    layout.push<float>(3);
-    layout.push<float>(3);
-    layout.push<float>(2);
+    VertexBufferLayout layoutcube;
+    layoutcube.push<float>(3);
+    layoutcube.push<float>(3);
     //创建顶点数组缓冲区,绑定顶点缓冲，并设置顶点属性布局
-    VA.BindBuffer(VB, layout);
+    VA.BindBuffer(VB, layoutcube);
 
 
     VertexArray VA_Light;
     VA_Light.Bind();//状态机的特性是必须先绑定这个VAO,后续VBO的数据才会被这个VAO所记录
-    VA_Light.BindBuffer(VB, layout);
+    VertexBuffer VBlight(poslight, sizeof(poslight));
+    VertexBufferLayout layoutlight;
+    layoutlight.push<float>(3);
+    layoutlight.push<float>(3);
+    layoutlight.push<float>(2);
+    VA_Light.BindBuffer(VBlight, layoutlight);
    
     
     //创建索引缓冲区并绑定
@@ -150,8 +244,8 @@ int main(void)
     IB.Bind();
     //创建纹理缓冲并绑定
     TextureBuffer Texture(1);
-    Texture.Bind();
-    Texture.LoadImage("../wang.jpg");  
+   // Texture.Bind();
+    //Texture.LoadImage("../wang.jpg");  
    
 
     //从源文件读取着色器源码，并绑定
@@ -174,8 +268,8 @@ int main(void)
     while (!glfwWindowShouldClose(window))//glfw提供窗口 glew进行绘制图形
     {
         /* Render here */
-        glClear(GL_COLOR_BUFFER_BIT);
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // also clear the depth buffer now!
+        GLCALL(glClear(GL_COLOR_BUFFER_BIT))
+        GLCALL(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)) // also clear the depth buffer now!
 
 
         // Start the Dear ImGui frame
@@ -220,38 +314,45 @@ int main(void)
             ImGui::End();
         }
 
+        //1.2, 1.0, 2.0
+
+        //绘制光源
+        Lightshader.Bind();//要先绑定着色器 才能去设置着色中的变量
+        glm::mat4 modellight = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
+        glm::mat4 viewlight = glm::mat4(1.0f);
+        glm::mat4 projectionlight = glm::mat4(1.0f);
+        modellight = glm::rotate(modellight, (float)glfwGetTime()*glm::radians(20.0f), glm::vec3(0.5f, 1.0f, 0.0f));
+        modellight = glm::scale(modellight, glm::vec3(0.3f, 0.3f, 0.3f));
+        viewlight = glm::translate(viewlight, glm::vec3(1.2f, 0.8f, -3.5f));
+        projectionlight = glm::perspective(glm::radians(45.0f), (float)SCR_WIDTH / (float)SCR_HEIGHT, 1.0f, 100.0f);
+        Lightshader.SetUniformMatrix4fv("modellight", modellight);
+        Lightshader.SetUniformMatrix4fv("viewlight", viewlight);
+        Lightshader.SetUniformMatrix4fv("projectionlight", projectionlight);
+        Lightshader.SetUniformVec4("u_color", 1.2f, 1.2f, 1.2f, 1.0f);
+        VA_Light.Bind();//重新绑定要绘制的数据   
+        Lightshader.Bind();//重新绑定要使用的顶点着色器(状态机特性)
+        GLCALL(glDrawArrays(GL_TRIANGLES, 0, 36)) //绘制缓冲区中的数据，无索引缓冲
 
 
-
-        // create transformations
+         // create transformations
+        //绘制立方体
+        Cubeshader.Bind();//要先绑定着色器 才能去设置着色中的变量
         glm::mat4 model = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
         glm::mat4 view = glm::mat4(1.0f);
         glm::mat4 projection = glm::mat4(1.0f);
-        model = glm::rotate(model, (float)glfwGetTime() * glm::radians(20.0f), glm::vec3(0.5f, 1.0f, 0.0f));
-        view = glm::translate(view, glm::vec3(1.0f, 0.0f, -5.0f));
-        projection = glm::perspective(glm::radians(45.0f), (float)SCR_WIDTH  / (float)SCR_HEIGHT, 1.0f, 100.0f);
-
-
-        //绘制立方体
+        model = glm::rotate(model, glm::radians(30.0f), glm::vec3(1.0f, 1.0f, 0.0f));
+        view = glm::translate(view, glm::vec3(0.0f, 0.0f, -5.0f));
+        projection = glm::perspective(glm::radians(45.0f), (float)SCR_WIDTH / (float)SCR_HEIGHT, 1.0f, 100.0f);
         Cubeshader.SetUniformMatrix4fv("model", model);
         Cubeshader.SetUniformMatrix4fv("view", view);
         Cubeshader.SetUniformMatrix4fv("projection", projection);
+        Cubeshader.SetUniformVec3("cubeColor", 1.0f, 0.5f, 0.31f);
+        Cubeshader.SetUniformVec3("lightColor", 1.0f, 1.0f, 1.0f);
+        Cubeshader.SetUniformVec3("lightPos", 1.2,1.0,2.0);
         VA.Bind();//绑定要绘制的数据
         Cubeshader.Bind();//绑定要使用的顶点着色器(状态机特性)
-        glDrawArrays(GL_TRIANGLES, 0, 36);//绘制缓冲区中的数据  无索引缓冲
-       
+        GLCALL(glDrawArrays(GL_TRIANGLES, 0, 36))//绘制缓冲区中的数据  无索引缓冲
 
-        //绘制光源
-        glm::mat4 modellight = glm::mat4(1.0f);
-        modellight = glm::rotate(modellight, (float)glfwGetTime() * glm::radians(20.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-        glm::mat4 viewlight = glm::mat4(1.0f);
-        viewlight = glm::translate(viewlight, glm::vec3(-1.0f, 0.0f, -5.0f));
-        Lightshader.SetUniformMatrix4fv("model", modellight);
-        Lightshader.SetUniformMatrix4fv("view", viewlight);
-        Lightshader.SetUniformMatrix4fv("projection", projection);
-        VA_Light .Bind();//重新绑定要绘制的数据
-        Lightshader.Bind();//重新绑定要使用的顶点着色器(状态机特性)
-        glDrawArrays(GL_TRIANGLES, 0, 36);//绘制缓冲区中的数据，无索引缓冲
 
 
  
