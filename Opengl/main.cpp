@@ -28,6 +28,32 @@ using namespace std;
 const unsigned int SCR_WIDTH = 2160;
 const unsigned int SCR_HEIGHT = 1440;
 
+// camera
+glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 3.0f);
+glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
+glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
+
+// timing
+float deltaTime = 0.0f;	// time between current frame and last frame
+float lastFrame = 0.0f;
+
+//key input
+void processInput(GLFWwindow* window)
+{
+    if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+        glfwSetWindowShouldClose(window, true);
+
+    float cameraSpeed = static_cast<float>(2.5 * deltaTime);
+    if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
+        cameraPos += cameraSpeed * cameraFront;
+    if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
+        cameraPos -= cameraSpeed * cameraFront;
+    if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
+        cameraPos -= glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
+    if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
+        cameraPos += glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
+}
+
 int main(void)
 {
 
@@ -51,6 +77,9 @@ int main(void)
     /* Make the window's context current */
     glfwMakeContextCurrent(window);
 
+
+    // tell GLFW to capture our mouse
+    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
 
     glewInit();//初始化glew
@@ -264,9 +293,23 @@ int main(void)
     bool show_another_window = false;
     ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
+    glm::vec3 cubeTranslatevec3(0.0f, 0.0f, 0.0f);//cube的model translate矩阵
+    glm::vec4 cubeColorvec3(1.0f, 0.5f, 0.31f, 1.0f);//cube的model color矩阵
+
     /* Loop until the user closes the window */
     while (!glfwWindowShouldClose(window))//glfw提供窗口 glew进行绘制图形
     {
+        // per-frame time logic
+        // --------------------
+        float currentFrame = static_cast<float>(glfwGetTime());
+        deltaTime = currentFrame - lastFrame;
+        lastFrame = currentFrame;
+
+        // keyinput
+        // -----
+        processInput(window);
+
+
         /* Render here */
         GLCALL(glClear(GL_COLOR_BUFFER_BIT))
         GLCALL(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)) // also clear the depth buffer now!
@@ -280,8 +323,6 @@ int main(void)
         if (show_demo_window)
             ImGui::ShowDemoWindow(&show_demo_window);
 
-       
-        glm::vec3 translatevec3(0.0f, 0.0f, 0.0f);
         //Show a simple window that we create ourselves. We use a Begin/End pair to create a named window.
         {
             static float f = 0.0f;
@@ -289,25 +330,27 @@ int main(void)
 
             ImGui::Begin("TinyRender Debug Window");                          // Create a window called "Hello, world!" and append into it.
 
-            ImGui::SliderFloat3("float", &translatevec3.x, -10.0f, 10.0f);//
+            ImGui::Text("TinyRender Debug");
+            ImGui::SliderFloat3("float", &cubeTranslatevec3.x, -10.0f, 10.0f);//
+            ImGui::ColorEdit3("clear color", (float*)&cubeColorvec3); // Edit 3 floats representing a color
 
-            ImGui::Text("This is some useful text.");               // Display some text (you can use a format strings too)
+
+                      // Display some text (you can use a format strings too)
             ImGui::Checkbox("Demo Window", &show_demo_window);      // Edit bools storing our window open/close state
             ImGui::Checkbox("Another Window", &show_another_window);
-
-            ImGui::SliderFloat("float", &f, 0.0f, 1.0f);            // Edit 1 float using a slider from 0.0f to 1.0f
-            ImGui::ColorEdit3("clear color", (float*)&clear_color); // Edit 3 floats representing a color
-
             if (ImGui::Button("Button"))                            // Buttons return true when clicked (most widgets return true when edited/activated)
                 counter++;
             ImGui::SameLine();
             ImGui::Text("counter = %d", counter);
-
             ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
             ImGui::End();
         }
 
-   
+        // camera/view transformation
+        glm::mat4 viewCamer = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
+
+
+ 
         //1.2, 1.0, 2.0
         //绘制光源
         Lightshader.Bind();//要先绑定着色器 才能去设置着色中的变量
@@ -315,11 +358,11 @@ int main(void)
         glm::mat4 viewlight = glm::mat4(1.0f);
         glm::mat4 projectionlight = glm::mat4(1.0f);
         modellight = glm::rotate(modellight, (float)glfwGetTime()*glm::radians(20.0f), glm::vec3(0.5f, 1.0f, 0.0f));
-        modellight = glm::scale(modellight, glm::vec3(0.3f, 0.3f, 0.3f));
-        viewlight = glm::translate(viewlight, glm::vec3(1.2f, 0.8f, -3.5f));
+        modellight = glm::scale(modellight, glm::vec3(0.2f, 0.2f, 0.2f));
+        viewCamer = glm::translate(viewCamer, glm::vec3(1.2f, 0.8f, -2.5f));
         projectionlight = glm::perspective(glm::radians(45.0f), (float)SCR_WIDTH / (float)SCR_HEIGHT, 1.0f, 100.0f);
         Lightshader.SetUniformMatrix4fv("modellight", modellight);
-        Lightshader.SetUniformMatrix4fv("viewlight", viewlight);
+        Lightshader.SetUniformMatrix4fv("viewlight", viewCamer);
         Lightshader.SetUniformMatrix4fv("projectionlight", projectionlight);
         Lightshader.SetUniformVec4("u_color", 1.2f, 1.2f, 1.2f, 1.0f);
         VA_Light.Bind();//重新绑定要绘制的数据   
@@ -333,14 +376,14 @@ int main(void)
         glm::mat4 model = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
         glm::mat4 view = glm::mat4(1.0f);
         glm::mat4 projection = glm::mat4(1.0f);
-        model = glm::rotate(model, glm::radians(30.0f), glm::vec3(1.0f, 1.0f, 0.0f));
-        model = glm::translate(model, translatevec3);//和imgui进行交互
-        view = glm::translate(view, glm::vec3(0.0f, 0.0f, -5.0f));
+        model = glm::rotate(model, (float)glfwGetTime()* glm::radians(30.0f), glm::vec3(1.0f, 1.0f, 0.0f));
+        model = glm::translate(model, cubeTranslatevec3);//和imgui进行交互
+        viewCamer = glm::translate(viewCamer, glm::vec3(0.0f, 0.0f, -4.0f));
         projection = glm::perspective(glm::radians(45.0f), (float)SCR_WIDTH / (float)SCR_HEIGHT, 1.0f, 100.0f);
         Cubeshader.SetUniformMatrix4fv("model", model);
-        Cubeshader.SetUniformMatrix4fv("view", view);
+        Cubeshader.SetUniformMatrix4fv("view", viewCamer);
         Cubeshader.SetUniformMatrix4fv("projection", projection);
-        Cubeshader.SetUniformVec3("cubeColor", 1.0f, 0.5f, 0.31f);
+        Cubeshader.SetUniformVec3("cubeColor", cubeColorvec3.x, cubeColorvec3.y, cubeColorvec3.z);
         Cubeshader.SetUniformVec3("lightColor", 1.0f, 1.0f, 1.0f);
         Cubeshader.SetUniformVec3("lightPos", 1.2,1.0,2.0);
         VA.Bind();//绑定要绘制的数据

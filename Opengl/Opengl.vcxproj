@@ -163,6 +163,7 @@
     <ClCompile Include="VertexBufferLayout.cpp" />
     <ClCompile Include="TextureBuffer.cpp" />
     <ClCompile Include="Shader.cpp" />
+    <ClCompile Include="Camer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Depend\glm\glm.hpp" />
@@ -186,6 +187,7 @@
     <ClInclude Include="ShaderUtil.h" />
     <ClInclude Include="TextureBuffer.h" />
     <ClInclude Include="Shader.h" />
+    <ClInclude Include="Camer.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="light.shader" />

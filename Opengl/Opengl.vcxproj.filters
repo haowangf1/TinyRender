@@ -34,6 +34,9 @@
     <Filter Include="渲染引擎\着色器源">
       <UniqueIdentifier>{7821bf74-94f7-4ddb-80df-84ec7f3695f4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="渲染引擎\摄像机系统">
+      <UniqueIdentifier>{d5e6cc5a-c3e5-414d-af4c-a25ae7561d25}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -83,6 +86,9 @@
     </ClCompile>
     <ClCompile Include="Shader.cpp">
       <Filter>渲染引擎\着色器源</Filter>
+    </ClCompile>
+    <ClCompile Include="Camer.cpp">
+      <Filter>渲染引擎\摄像机系统</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -148,6 +154,9 @@
     </ClInclude>
     <ClInclude Include="Shader.h">
       <Filter>渲染引擎\着色器源</Filter>
+    </ClInclude>
+    <ClInclude Include="Camer.h">
+      <Filter>渲染引擎\摄像机系统</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
