@@ -271,7 +271,6 @@ int main(void)
         GLCALL(glClear(GL_COLOR_BUFFER_BIT))
         GLCALL(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)) // also clear the depth buffer now!
 
-
         // Start the Dear ImGui frame
         ImGui_ImplOpenGL3_NewFrame();
         ImGui_ImplGlfw_NewFrame();
@@ -281,12 +280,16 @@ int main(void)
         if (show_demo_window)
             ImGui::ShowDemoWindow(&show_demo_window);
 
-        // 2. Show a simple window that we create ourselves. We use a Begin/End pair to create a named window.
+       
+        glm::vec3 translatevec3(0.0f, 0.0f, 0.0f);
+        //Show a simple window that we create ourselves. We use a Begin/End pair to create a named window.
         {
             static float f = 0.0f;
             static int counter = 0;
 
-            ImGui::Begin("Hello, world!");                          // Create a window called "Hello, world!" and append into it.
+            ImGui::Begin("TinyRender Debug Window");                          // Create a window called "Hello, world!" and append into it.
+
+            ImGui::SliderFloat3("float", &translatevec3.x, -10.0f, 10.0f);//
 
             ImGui::Text("This is some useful text.");               // Display some text (you can use a format strings too)
             ImGui::Checkbox("Demo Window", &show_demo_window);      // Edit bools storing our window open/close state
@@ -304,18 +307,8 @@ int main(void)
             ImGui::End();
         }
 
-        // 3. Show another simple window.
-        if (show_another_window)
-        {
-            ImGui::Begin("Another Window", &show_another_window);   // Pass a pointer to our bool variable (the window will have a closing button that will clear the bool when clicked)
-            ImGui::Text("Hello from another window!");
-            if (ImGui::Button("Close Me"))
-                show_another_window = false;
-            ImGui::End();
-        }
-
+   
         //1.2, 1.0, 2.0
-
         //绘制光源
         Lightshader.Bind();//要先绑定着色器 才能去设置着色中的变量
         glm::mat4 modellight = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
@@ -334,13 +327,14 @@ int main(void)
         GLCALL(glDrawArrays(GL_TRIANGLES, 0, 36)) //绘制缓冲区中的数据，无索引缓冲
 
 
-         // create transformations
+        // create transformations
         //绘制立方体
         Cubeshader.Bind();//要先绑定着色器 才能去设置着色中的变量
         glm::mat4 model = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
         glm::mat4 view = glm::mat4(1.0f);
         glm::mat4 projection = glm::mat4(1.0f);
         model = glm::rotate(model, glm::radians(30.0f), glm::vec3(1.0f, 1.0f, 0.0f));
+        model = glm::translate(model, translatevec3);//和imgui进行交互
         view = glm::translate(view, glm::vec3(0.0f, 0.0f, -5.0f));
         projection = glm::perspective(glm::radians(45.0f), (float)SCR_WIDTH / (float)SCR_HEIGHT, 1.0f, 100.0f);
         Cubeshader.SetUniformMatrix4fv("model", model);
@@ -354,8 +348,6 @@ int main(void)
         GLCALL(glDrawArrays(GL_TRIANGLES, 0, 36))//绘制缓冲区中的数据  无索引缓冲
 
 
-
- 
 
 
          // Rendering
