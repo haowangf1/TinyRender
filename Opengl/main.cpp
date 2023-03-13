@@ -79,7 +79,7 @@ int main(void)
 
 
     // tell GLFW to capture our mouse
-    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+   // glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
 
     glewInit();//初始化glew
@@ -100,9 +100,6 @@ int main(void)
     // Setup Platform/Renderer backends
     ImGui_ImplGlfw_InitForOpenGL(window, true);
     ImGui_ImplOpenGL3_Init(glsl_version);
-
-
-
 
     //开启深度测试
     glEnable(GL_DEPTH_TEST);
@@ -357,7 +354,7 @@ int main(void)
         glm::mat4 modellight = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
         glm::mat4 viewlight = glm::mat4(1.0f);
         glm::mat4 projectionlight = glm::mat4(1.0f);
-        modellight = glm::rotate(modellight, (float)glfwGetTime()*glm::radians(20.0f), glm::vec3(0.5f, 1.0f, 0.0f));
+        modellight = glm::rotate(modellight, glm::radians(20.0f), glm::vec3(0.5f, 1.0f, 0.0f));
         modellight = glm::scale(modellight, glm::vec3(0.2f, 0.2f, 0.2f));
         viewCamer = glm::translate(viewCamer, glm::vec3(1.2f, 0.8f, -2.5f));
         projectionlight = glm::perspective(glm::radians(45.0f), (float)SCR_WIDTH / (float)SCR_HEIGHT, 1.0f, 100.0f);
@@ -376,7 +373,7 @@ int main(void)
         glm::mat4 model = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
         glm::mat4 view = glm::mat4(1.0f);
         glm::mat4 projection = glm::mat4(1.0f);
-        model = glm::rotate(model, (float)glfwGetTime()* glm::radians(30.0f), glm::vec3(1.0f, 1.0f, 0.0f));
+        model = glm::rotate(model,  glm::radians(30.0f), glm::vec3(1.0f, 1.0f, 0.0f));
         model = glm::translate(model, cubeTranslatevec3);//和imgui进行交互
         viewCamer = glm::translate(viewCamer, glm::vec3(0.0f, 0.0f, -4.0f));
         projection = glm::perspective(glm::radians(45.0f), (float)SCR_WIDTH / (float)SCR_HEIGHT, 1.0f, 100.0f);
@@ -385,12 +382,11 @@ int main(void)
         Cubeshader.SetUniformMatrix4fv("projection", projection);
         Cubeshader.SetUniformVec3("cubeColor", cubeColorvec3.x, cubeColorvec3.y, cubeColorvec3.z);
         Cubeshader.SetUniformVec3("lightColor", 1.0f, 1.0f, 1.0f);
-        Cubeshader.SetUniformVec3("lightPos", 1.2,1.0,2.0);
+        Cubeshader.SetUniformVec3("lightPos", 0,0,2.0);
+        Cubeshader.SetUniformVec3("viewPos", 0, 0, 2.0);
         VA.Bind();//绑定要绘制的数据
         Cubeshader.Bind();//绑定要使用的顶点着色器(状态机特性)
         GLCALL(glDrawArrays(GL_TRIANGLES, 0, 36))//绘制缓冲区中的数据  无索引缓冲
-
-
 
 
          // Rendering
